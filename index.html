@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Virtual UTM Simulation | Tensile Testing Lab</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <link rel="stylesheet" href="/src/styles/hud.css">
+  <link rel="stylesheet" href="/src/styles/controls.css">
+  <link rel="stylesheet" href="/src/styles/report.css">
+</head>
+<body>
+  <div id="app-container">
+    <!-- 3D WebGL Canvas Layer -->
+    <div id="viewport-canvas-container"></div>
+
+    <!-- Top App Header -->
+    <header id="app-header">
+      <div class="brand-title">
+        <span>UTM TENSILE SIMULATOR</span>
+        <span class="brand-badge">ASTM E8 / ISO 6892-1</span>
+      </div>
+
+      <div class="step-indicator">
+        <span>Current Phase:</span>
+        <div id="step-pill" class="step-pill">
+          <span id="step-number">STEP 1/13</span>
+          <span id="step-name">Rod Selection</span>
+        </div>
+      </div>
+
+      <div class="mode-toggle-group">
+        <button id="mode-guided-btn" class="mode-btn active" title="Interactive visual guides & hints">Guided</button>
+        <button id="mode-assess-btn" class="mode-btn" title="Independent student assessment mode">Assessment</button>
+      </div>
+    </header>
+
+    <!-- Left Real-Time Graph & Response Curve Pod -->
+    <div id="analytics-pod">
+      <div class="section-header">
+        <span class="section-title">Response Curve</span>
+        <div class="chart-tab-bar">
+          <button id="chart-tab-load" class="chart-tab-btn active">Load vs ΔL</button>
+          <button id="chart-tab-stress" class="chart-tab-btn">Stress vs Strain</button>
+        </div>
+      </div>
+      <canvas id="realtime-chart-canvas" class="chart-canvas"></canvas>
+    </div>
+
+    <!-- Floating Camera View Director -->
+    <div id="camera-view-bar">
+      <button class="cam-view-btn active" data-view="OVERVIEW">
+        <span>Overview</span>
+        <span class="cam-key-hint">1</span>
+      </button>
+      <button class="cam-view-btn" data-view="UTM_GRIPS">
+        <span>UTM Grips</span>
+        <span class="cam-key-hint">2</span>
+      </button>
+      <button class="cam-view-btn" data-view="METROLOGY_BENCH">
+        <span>Caliper Bench</span>
+        <span class="cam-key-hint">3</span>
+      </button>
+      <button class="cam-view-btn" data-view="CONSOLE_MONITOR">
+        <span>DAQ Monitor</span>
+        <span class="cam-key-hint">4</span>
+      </button>
+    </div>
+
+    <!-- Floating Vernier Caliper Magnifier Loupe (HUD Lens) -->
+    <div id="caliper-loupe-pod">
+      <div class="section-header">
+        <span class="section-title">Vernier Optical Loupe (4×)</span>
+        <span id="caliper-lock-badge" class="brand-badge">FREE</span>
+      </div>
+      <canvas id="loupe-canvas" class="loupe-scale-canvas"></canvas>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
+        <span style="font-size: 12px; color: var(--text-secondary);">Simulated Reading:</span>
+        <span id="caliper-live-reading" style="font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--led-cyan);">0.00 mm</span>
+      </div>
+    </div>
+
+    <!-- Right Telemetry & Specimen Pod -->
+    <aside id="telemetry-pod">
+      <!-- 1. Specimen Selection -->
+      <section>
+        <div class="section-header">
+          <span class="section-title">Specimen Selection</span>
+          <span id="material-badge" class="brand-badge">Mild Steel</span>
+        </div>
+        <div class="material-toggle-bar">
+          <button id="mat-steel-btn" class="mat-tab-btn active" data-mat="MILD_STEEL">Mild Steel</button>
+          <button id="mat-iron-btn" class="mat-tab-btn" data-mat="GREY_CAST_IRON">Grey Cast Iron</button>
+        </div>
+        <div class="specimen-grid">
+          <div class="specimen-card active" data-rod="8">
+            <div class="rod-icon" style="width: 10px;"></div>
+            <span class="rod-label">Rod 1</span>
+            <span class="rod-sub">Ø 8 mm</span>
+          </div>
+          <div class="specimen-card" data-rod="10">
+            <div class="rod-icon" style="width: 13px;"></div>
+            <span class="rod-label">Rod 2</span>
+            <span class="rod-sub">Ø 10 mm</span>
+          </div>
+          <div class="specimen-card" data-rod="12">
+            <div class="rod-icon" style="width: 16px;"></div>
+            <span class="rod-label">Rod 3</span>
+            <span class="rod-sub">Ø 12 mm</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Matched Machine Capacity -->
+      <section>
+        <div class="section-header">
+          <span class="section-title">Matched UTM Capacity</span>
+        </div>
+        <div class="machine-info-card">
+          <div class="machine-spec-grid">
+            <div class="machine-spec-item">
+              <span class="machine-spec-label">RATED CAPACITY</span>
+              <span id="machine-capacity-val" class="machine-spec-val highlight">50 kN (5 Tons)</span>
+            </div>
+            <div class="machine-spec-item">
+              <span class="machine-spec-label">MAIN DRIVE</span>
+              <span id="machine-drive-val" class="machine-spec-val">Electromechanical</span>
+            </div>
+          </div>
+          <div class="machine-app-block">
+            <span class="machine-app-label">Application:</span>
+            <span id="machine-app-val" class="machine-app-val">Thin wires, fasteners, plastics, light bars (Up to 8 mm)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Digital Readout Telemetry Gauges -->
+      <section>
+        <div class="section-header">
+          <span class="section-title">Live Telemetry Transducers</span>
+        </div>
+        <div class="telemetry-grid">
+          <div class="gauge-box">
+            <div class="gauge-label-row">
+              <span class="gauge-title">Load</span>
+              <span class="gauge-unit">kN</span>
+            </div>
+            <div id="gauge-load" class="gauge-value">0.00</div>
+          </div>
+          <div class="gauge-box">
+            <div class="gauge-label-row">
+              <span class="gauge-title">Elongation</span>
+              <span class="gauge-unit">mm</span>
+            </div>
+            <div id="gauge-elongation" class="gauge-value">0.00</div>
+          </div>
+          <div class="gauge-box stress">
+            <div class="gauge-label-row">
+              <span class="gauge-title">Stress (σ)</span>
+              <span class="gauge-unit">MPa</span>
+            </div>
+            <div id="gauge-stress" class="gauge-value">0.0</div>
+          </div>
+          <div class="gauge-box">
+            <div class="gauge-label-row">
+              <span class="gauge-title">Strain (ε)</span>
+              <span class="gauge-unit">mm/mm</span>
+            </div>
+            <div id="gauge-strain" class="gauge-value">0.0000</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Specimen Metadata & Standards -->
+      <section>
+        <div class="section-header">
+          <span class="section-title">Specimen Metadata</span>
+        </div>
+        <div class="specimen-meta-card">
+          <div class="meta-row">
+            <span class="meta-label">Gauge Length (L₀)</span>
+            <span class="meta-val">300.0 mm</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Initial Diameter (d₀)</span>
+            <span id="meta-dia-val" class="meta-val highlight">8.00 mm</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Cross-Section Area (A₀)</span>
+            <span id="meta-area-val" class="meta-val highlight">50.27 mm²</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Geometry Standard</span>
+            <span id="meta-standard-val" class="meta-val">ASTM E8 Cylindrical</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Crosshead Speed</span>
+            <span class="meta-val">1.5 mm/min</span>
+          </div>
+        </div>
+      </section>
+    </aside>
+
+    <!-- Bottom Industrial Control Console -->
+    <footer id="control-console-bar">
+      <div class="console-left-group">
+        <div id="machine-status-block" class="machine-status-block">
+          <span class="status-label">Machine Status</span>
+          <span id="status-text" class="status-val">READY / STANDBY</span>
+        </div>
+
+        <div class="step-instruction-block" style="display: flex; flex-direction: column;">
+          <span style="font-size: 10px; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">Instructions</span>
+          <span id="instruction-text" style="font-size: 13px; color: var(--text-primary); max-width: 480px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+            Select a mild steel rod specimen to begin the laboratory test.
+          </span>
+        </div>
+      </div>
+
+      <div class="console-actions-group">
+        <button id="btn-tare" class="btn-icon-tactile" data-tooltip="Tare / Zero" disabled aria-label="Tare / Zero">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12h4m8 0h4"/>
+            <circle cx="12" cy="12" r="3.5"/>
+          </svg>
+        </button>
+        <button id="btn-measure-record" class="btn-icon-tactile btn-record" data-tooltip="Record Measurement" disabled aria-label="Record Measurement">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="6" width="20" height="12" rx="2"/>
+            <path d="M6 6v5M10 6v3M14 6v5M18 6v3"/>
+          </svg>
+        </button>
+        <button id="btn-start-test" class="btn-icon-tactile btn-start" data-tooltip="Start Test" disabled aria-label="Start Test">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="6 4 20 12 6 20 6 4"/>
+          </svg>
+        </button>
+        <button id="btn-reset" class="btn-icon-tactile" data-tooltip="Reset Experiment" aria-label="Reset">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+        </button>
+
+        <div class="estop-container">
+          <button id="btn-estop" class="btn-estop" data-tooltip="Emergency Stop (Spacebar)" aria-label="Emergency Stop">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/>
+              <rect x="9" y="9" width="6" height="6" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

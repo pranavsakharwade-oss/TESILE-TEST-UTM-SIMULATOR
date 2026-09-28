@@ -1,0 +1,387 @@
+/* ==========================================================================
+   HUD Styles - Minimalist Flush Sidebar (100% Borderless, Spacious & Breathing)
+   ========================================================================== */
+
+/* 1. Flush Right Sidebar */
+#telemetry-pod {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  bottom: 0;
+  width: 390px;
+  height: calc(100vh - 48px);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 22px 20px;
+  background: var(--bg-panel);
+  border-left: 1px solid var(--border-subtle);
+  border-radius: var(--radius-none);
+  box-shadow: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#telemetry-pod::-webkit-scrollbar {
+  width: 4px;
+}
+#telemetry-pod::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 2px;
+}
+
+/* Card Section Header */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.section-title::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+}
+
+/* Material Toggle Bar (Clean Segmented Controller) */
+.material-toggle-bar {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-subtle);
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+}
+
+.mat-tab-btn {
+  flex: 1;
+  padding: 7px 10px;
+  border-radius: var(--radius-xs);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.mat-tab-btn:hover {
+  color: var(--text-main);
+}
+
+.mat-tab-btn.active {
+  background: #ffffff;
+  color: var(--accent-primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Specimen Selector Cards (Borderless, Spacious) */
+.specimen-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.specimen-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 8px;
+  min-height: 94px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.specimen-card:hover {
+  background: #f1f5f9;
+}
+
+.specimen-card.active {
+  background: #e0f2fe;
+  border: none;
+  box-shadow: none;
+}
+
+.specimen-card.active .rod-label {
+  color: var(--accent-primary);
+}
+
+.specimen-card .rod-icon {
+  width: 14px;
+  height: 28px;
+  background: #94a3b8;
+  border-radius: 1px;
+  margin-bottom: 8px;
+}
+
+.specimen-card.active .rod-icon {
+  background: var(--accent-primary);
+}
+
+.specimen-card .rod-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.specimen-card .rod-sub {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Matched Machine Capacity Card (Clean & Proper Layout) */
+.machine-info-card {
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.machine-spec-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.machine-spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.machine-spec-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-caption);
+  text-transform: uppercase;
+}
+
+.machine-spec-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.machine-spec-val.highlight {
+  color: var(--accent-primary);
+  font-size: 16px;
+}
+
+.machine-app-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 10px;
+  border-top: 1px solid #edf2f7;
+}
+
+.machine-app-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-caption);
+  text-transform: uppercase;
+}
+
+.machine-app-val {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* Digital Readout Gauges Grid (Spacious & Clear) */
+.telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.gauge-box {
+  padding: 14px 16px;
+  min-height: 84px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gauge-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.gauge-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.gauge-unit {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-caption);
+}
+
+.gauge-value {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+}
+
+.gauge-box.stress .gauge-value {
+  color: var(--status-warning);
+}
+
+/* Specimen Metadata Card */
+.specimen-meta-card {
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+}
+
+.meta-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.meta-val {
+  color: var(--text-main);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Left Analytics & Real-Time Response Curve Pod (Bottom-Left) */
+#analytics-pod {
+  position: absolute;
+  bottom: 70px;
+  left: 16px;
+  width: 360px;
+  z-index: 15;
+  background: #ffffff;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+#analytics-pod .section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+#analytics-pod .chart-tab-bar {
+  display: flex;
+  gap: 4px;
+}
+
+#analytics-pod .chart-tab-btn {
+  padding: 4px 8px;
+  border-radius: var(--radius-xs);
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  background: #f1f5f9;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+#analytics-pod .chart-tab-btn:hover {
+  color: var(--text-main);
+}
+
+#analytics-pod .chart-tab-btn.active {
+  background: var(--accent-primary);
+  color: #ffffff;
+  box-shadow: 0 1px 2px rgba(2, 132, 199, 0.2);
+}
+
+#analytics-pod .chart-canvas {
+  width: 100%;
+  height: 180px;
+  display: block;
+  background: #f8fafc;
+  border-radius: var(--radius-xs);
+}
+
+/* Vernier Caliper Magnifier Loupe */
+#caliper-loupe-pod {
+  position: absolute;
+  bottom: 268px;
+  left: 16px;
+  width: 360px;
+  z-index: 25;
+  background: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  display: none;
+}
+
+#caliper-loupe-pod.visible {
+  display: block;
+}
+
+.loupe-scale-canvas {
+  width: 100%;
+  height: 90px;
+  background: #ffffff;
+  border-radius: var(--radius-xs);
+  border: none;
+  display: block;
+  margin: 6px 0;
+}

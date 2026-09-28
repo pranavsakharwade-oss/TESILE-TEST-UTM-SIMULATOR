@@ -1,0 +1,312 @@
+/* ==========================================================================
+   Lab Report Modal Styles (Light Mode, 100% Manrope, Borderless Containers)
+   ========================================================================== */
+
+#lab-report-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+#lab-report-modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lab-report-container {
+  width: 900px;
+  max-width: 92vw;
+  max-height: 88vh;
+  background: #ffffff;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: var(--font-sans);
+}
+
+/* Modal Header Bar */
+.report-header-bar {
+  padding: 16px 24px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.report-header-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.report-institution-tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.report-main-heading {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.report-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.report-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: var(--radius-xs);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.report-btn-secondary {
+  background: #f1f5f9;
+  color: var(--text-main);
+}
+
+.report-btn-secondary:hover {
+  background: #e2e8f0;
+}
+
+.report-btn-primary {
+  background: var(--accent-primary);
+  color: #ffffff;
+}
+
+.report-btn-primary:hover {
+  background: #0277b6;
+}
+
+.report-close-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+  transition: all var(--transition-fast);
+}
+
+.report-close-btn:hover {
+  background: #f1f5f9;
+  color: var(--text-main);
+}
+
+/* Modal Scrollable Body */
+.report-content-body {
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Section Header */
+.report-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+/* 1. Specimen & Test Profile (Borderless Card Grid) */
+.report-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.report-profile-card {
+  background: #f8fafc;
+  padding: 12px 14px;
+  border-radius: var(--radius-xs);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.report-profile-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.report-profile-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 2. Key Calculated Properties Grid */
+.report-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.report-kpi-box {
+  background: #f8fafc;
+  padding: 14px;
+  border-radius: var(--radius-xs);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.report-kpi-box.highlight {
+  background: #f0f9ff;
+}
+
+.report-kpi-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.report-kpi-val {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+}
+
+.report-kpi-box.highlight .report-kpi-val {
+  color: var(--accent-primary);
+}
+
+.report-kpi-unit {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* 3. Tabulated Observation Table (Clean, Borderless Container) */
+.report-table-card {
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: var(--radius-xs);
+}
+
+.report-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.report-data-table th {
+  text-align: left;
+  padding: 8px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.report-data-table td {
+  padding: 10px 12px;
+  color: var(--text-main);
+  border-bottom: 1px solid #edf2f7;
+  font-variant-numeric: tabular-nums;
+}
+
+.report-data-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* 4. Morphology & Standard Verdict */
+.report-verdict-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.report-verdict-card {
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: var(--radius-xs);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.report-verdict-card.success {
+  background: #f0fdf4;
+}
+
+.report-badge-pass {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 4px 8px;
+  border-radius: var(--radius-xs);
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Print Stylesheet */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #lab-report-modal-overlay,
+  #lab-report-modal-overlay * {
+    visibility: visible;
+  }
+  #lab-report-modal-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    background: white;
+  }
+  .lab-report-container {
+    box-shadow: none;
+    max-width: 100%;
+    max-height: none;
+  }
+  .report-header-actions,
+  .report-close-btn {
+    display: none !important;
+  }
+}

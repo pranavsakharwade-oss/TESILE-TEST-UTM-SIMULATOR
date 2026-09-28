@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Design Tokens - Minimal & Proper Engineering Workspace (100% Manrope)
+   ========================================================================== */
+
+:root {
+  /* Surfaces & Structural Layout */
+  --bg-app-shell:        #ffffff;
+  --bg-viewport:         #f1f5f9;                 /* 3D scene backdrop */
+  --bg-panel:            #ffffff;                 /* Solid, clean white panel */
+  --bg-subtle:           #f8fafc;                 /* Secondary item background */
+  --bg-input:            #f1f5f9;                 /* Metric readout insets */
+
+  /* Structural Dividers & Borders */
+  --border-subtle:       #e2e8f0;                 /* Clean light divider */
+  --border-strong:       #cbd5e1;                 /* Active/focused border */
+  --border-focus:        #0284c7;                 /* Precision blue focus */
+
+  /* Primary Accent & Signal Colors */
+  --accent-primary:      #0284c7;                 /* Technical blue */
+  --accent-hover:        #0369a1;
+  --status-ready:        #16a34a;                 /* Pass / Ready */
+  --status-warning:      #d97706;                 /* Yielding / Attention */
+  --status-danger:       #dc2626;                 /* Fracture / E-Stop */
+  --status-idle:         #94a3b8;
+
+  /* Typography Colors */
+  --text-main:           #0f172a;                 /* Crisp high-contrast slate-900 */
+  --text-muted:          #475569;                 /* Readable slate-600 */
+  --text-caption:        #94a3b8;                 /* Secondary slate-400 */
+  --text-inverse:        #ffffff;
+
+  /* Pure Manrope Typography */
+  --font-family:         'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans:           var(--font-family);
+  --font-mono:           var(--font-family);
+
+  /* Clean Minimal Radii (Proper UI, No Bulbous Slop) */
+  --radius-none:         0px;
+  --radius-xs:           3px;
+  --radius-sm:           4px;
+  --radius-md:           6px;
+
+  /* Transitions */
+  --transition-fast:     120ms ease;
+  --transition-normal:   200ms ease;
+}

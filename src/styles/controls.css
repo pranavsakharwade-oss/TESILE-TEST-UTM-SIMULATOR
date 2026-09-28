@@ -1,0 +1,200 @@
+/* ==========================================================================
+   Industrial Control Bar - Minimalist Flush Bottom Console (100% Manrope)
+   ========================================================================== */
+
+#control-console-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 390px;
+  height: 56px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: var(--bg-panel);
+  border-top: 1px solid var(--border-subtle);
+  border-radius: var(--radius-none);
+  box-shadow: none;
+}
+
+.console-left-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.machine-status-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  padding: 5px 12px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.machine-status-block.running {
+  background: #e0f2fe;
+}
+.machine-status-block.running .status-val {
+  color: var(--accent-primary);
+}
+
+.machine-status-block.warning {
+  background: #fef3c7;
+}
+.machine-status-block.warning .status-val {
+  color: var(--status-warning);
+}
+
+.machine-status-block.fracture, .machine-status-block.estop {
+  background: #fee2e2;
+}
+.machine-status-block.fracture .status-val, .machine-status-block.estop .status-val {
+  color: var(--status-danger);
+}
+
+.status-text-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.status-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-caption);
+}
+
+.status-val {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: 0.02em;
+}
+
+/* Action Push Buttons Group (Compact Icon-Based) */
+.console-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-icon-tactile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border: none;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.btn-icon-tactile:hover:not(:disabled) {
+  background: #f1f5f9;
+  color: var(--accent-primary);
+}
+
+.btn-icon-tactile:active:not(:disabled) {
+  background: #e2e8f0;
+}
+
+.btn-icon-tactile:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: var(--bg-subtle);
+  color: var(--text-caption);
+}
+
+/* Specific Variant Buttons */
+.btn-icon-tactile.btn-start {
+  background: var(--status-ready);
+  color: #ffffff;
+}
+
+.btn-icon-tactile.btn-start:hover:not(:disabled) {
+  background: #15803d;
+  color: #ffffff;
+}
+
+.btn-icon-tactile.btn-record {
+  background: var(--accent-primary);
+  color: #ffffff;
+}
+
+.btn-icon-tactile.btn-record:hover:not(:disabled) {
+  background: var(--accent-hover);
+  color: #ffffff;
+}
+
+/* Emergency Stop (Square Icon Button) */
+.estop-container {
+  display: flex;
+  align-items: center;
+  margin-left: 6px;
+}
+
+.btn-estop {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--status-danger);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  position: relative;
+}
+
+.btn-estop:hover {
+  background: #b91c1c;
+}
+
+.btn-estop:active {
+  transform: scale(0.96);
+}
+
+/* Clean Hover Tooltip */
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  padding: 4px 8px;
+  background: #0f172a;
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  border-radius: var(--radius-xs);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 140ms ease, transform 140ms ease;
+  z-index: 100;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+[data-tooltip]:hover::before {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
